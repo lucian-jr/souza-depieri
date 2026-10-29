@@ -1,0 +1,122 @@
+@import "tailwindcss";
+
+/* Load the classic JS/TS config so the design tokens live in `tailwind.config.ts`. */
+@config "../../tailwind.config.ts";
+
+:root {
+  /* Horizontal page gutter: 150px at the 1920px prototype width, fluid below it. */
+  --gutter: clamp(1.5rem, 7.8125vw, 150px);
+  /* Height of the fixed header, used for anchor offsets. */
+  --header-h: 5.5rem;
+}
+
+/* Content column: 1620px wide, centred, with the fluid gutter on small screens. */
+@utility px-gutter {
+  padding-inline: max(var(--gutter), calc((100% - 1620px) / 2));
+}
+
+@utility pl-gutter {
+  padding-left: max(var(--gutter), calc((100% - 1620px) / 2));
+}
+
+@utility pr-gutter {
+  padding-right: max(var(--gutter), calc((100% - 1620px) / 2));
+}
+
+/* ---------------------------------------------------------------------------
+   Typography scale (values measured on the 1920px prototype, fluid below).
+   --------------------------------------------------------------------------- */
+
+/* Hero headline — Gotham Light, 88px */
+@utility type-display {
+  font-size: clamp(2.75rem, 4.6vw, 5.5rem);
+  line-height: 1.07;
+  font-weight: 300;
+  letter-spacing: -0.005em;
+}
+
+/* Section headline — Gotham Bold, 44px */
+@utility type-h2 {
+  font-size: clamp(1.875rem, 2.3vw, 2.75rem);
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+}
+
+/* Large body copy — Gotham Book, 25px */
+@utility type-lead {
+  font-size: clamp(1.0625rem, 1.3vw, 1.5625rem);
+  line-height: 1.3;
+  font-weight: 400;
+}
+
+/* Section label (ATUAÇÃO, TRAJETÓRIA…) — Gotham Book caps, 34px */
+@utility type-label {
+  font-size: clamp(1.5rem, 1.8vw, 2.125rem);
+  line-height: 1.1;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+/* Button / nav text — Gotham, 19px (weight is chosen per component) */
+@utility type-btn {
+  font-size: clamp(1rem, 1vw, 1.1875rem);
+  line-height: 1.2;
+}
+
+/* Card title — Gotham Bold, 24px */
+@utility type-card-title {
+  font-size: clamp(1.25rem, 1.25vw, 1.5rem);
+  line-height: 1.1;
+  font-weight: 700;
+}
+
+/* Card body — Gotham Book, 17px */
+@utility type-card-body {
+  font-size: clamp(0.9375rem, 0.9vw, 1.0625rem);
+  line-height: 1.4;
+  font-weight: 400;
+}
+
+@layer base {
+  html {
+    /* Lenis owns the smoothing. Native smooth scroll fights its interpolation. */
+    scroll-behavior: auto;
+    /* Keep anchored sections clear of the fixed header. Lenis reads this offset. */
+    scroll-padding-top: var(--header-h);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+
+  html.lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  body {
+    @apply bg-background-offwhite font-sans text-text-dark;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    @apply bg-primary-light text-white;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-4 outline-primary-light;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
