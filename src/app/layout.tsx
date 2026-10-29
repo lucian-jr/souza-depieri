@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { SmoothScroll } from "@/components/SmoothScroll";
+import { allowIndexing } from "@/lib/indexing";
 import "./globals.css";
 
 /**
@@ -33,6 +34,14 @@ export const metadata: Metadata = {
     locale: "pt_BR",
     type: "website",
   },
+  robots: allowIndexing()
+    ? { index: true, follow: true }
+    : {
+        index: false,
+        follow: false,
+        nocache: true,
+        googleBot: { index: false, follow: false, noimageindex: true },
+      },
 };
 
 export const viewport: Viewport = {
